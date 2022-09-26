@@ -16,6 +16,7 @@
 // along with OpenSoundLab.  If not, see <http://www.gnu.org/licenses/>.
 
 using UnityEngine;
+using UnityEngine.Audio;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -91,16 +92,16 @@ public class masterControl : MonoBehaviour {
       Debug.LogWarning("Unity sample rate is " + configuration.sampleRate);
     }
 
-    int bufferSize = 512;
+    //int bufferSize = 512;
 
-    if(Application.platform == RuntimePlatform.WindowsEditor)
-    {
-      bufferSize = 512;
-    } 
-    else if (Application.platform == RuntimePlatform.Android)
-    {
-      bufferSize = 256;
-    }
+    //if(Application.platform == RuntimePlatform.WindowsEditor)
+    //{
+    //  bufferSize = 512;
+    //} 
+    //else if (Application.platform == RuntimePlatform.Android)
+    //{
+    //  bufferSize = 256;
+    //}
 
     Debug.Log("Buffer size is: " + configuration.dspBufferSize);
     //configuration.dspBufferSize = bufferSize;
@@ -365,21 +366,38 @@ public class masterControl : MonoBehaviour {
   };
   public static BinauralMode BinauralSetting = BinauralMode.Speaker;
 
+  //public AudioMixer mixer;
+  public AudioMixerGroup spat;
+  public AudioMixerGroup nospat;
+
   public static void updateBinaural(int num) {
+    
     if (BinauralSetting == (BinauralMode)num) {
       return;
     }
     BinauralSetting = (BinauralMode)num;
 
-    speakerDeviceInterface[] standaloneSpeakers = FindObjectsOfType<speakerDeviceInterface>();
+    //speakerDeviceInterface[] standaloneSpeakers = FindObjectsOfType<speakerDeviceInterface>();
     //for (int i = 0; i < standaloneSpeakers.Length; i++) {
     //  if (BinauralSetting == BinauralMode.None) standaloneSpeakers[i].audio.spatialize = false;
     //  else standaloneSpeakers[i].audio.spatialize = true;
     //}
+
+    //AudioMixer mixer = Resources.Load<AudioMixer>("MIXER");
+    //AudioMixerGroup spat = mixer.FindMatchingGroups("spat")[0];
+    ////if (spat.GetType() != typeof(AudioMixerGroup)) return;
+    //AudioMixerGroup nospat = mixer.FindMatchingGroups("nospat")[0];
+    //if (nospat.GetType() != typeof(AudioMixerGroup)) return;
+
     embeddedSpeaker[] embeddedSpeakers = FindObjectsOfType<embeddedSpeaker>();
     for (int i = 0; i < embeddedSpeakers.Length; i++) {
-      if (BinauralSetting == BinauralMode.All) embeddedSpeakers[i].audio.spatialize = true;
-      else embeddedSpeakers[i].audio.spatialize = false;
+      if (BinauralSetting == BinauralMode.All) {
+        embeddedSpeakers[i].audio.spatialize = true;
+        embeddedSpeakers[i].audio.outputAudioMixerGroup = masterControl.instance.spat;
+      } else {
+        embeddedSpeakers[i].audio.spatialize = false;
+        embeddedSpeakers[i].audio.outputAudioMixerGroup = masterControl.instance.nospat;
+      }
     }
   }
 

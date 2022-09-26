@@ -166,6 +166,7 @@ MonoBehaviour:
   stickyGrip: 0
   canBeDeleted: 0
   percent: 1
+  defaultPercent: 0
   dialColor: 2
   controllerRot: 0
   lastControllerRot: 0
@@ -2123,7 +2124,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3267725614650922957}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.000000104308114}
-  m_LocalPosition: {x: 0, y: 0, z: -0.0241}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0331}
   m_LocalScale: {x: 0.12, y: 0.12, z: 0.11999995}
   m_ConstrainProportionsScale: 0
   m_Children:

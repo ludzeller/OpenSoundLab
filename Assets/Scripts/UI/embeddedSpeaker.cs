@@ -41,7 +41,13 @@ public class embeddedSpeaker : MonoBehaviour {
   }
 
   void Start() {
-    audio.spatialize = (masterControl.BinauralSetting == masterControl.BinauralMode.All);
+    if(masterControl.BinauralSetting == masterControl.BinauralMode.All){
+      audio.spatialize = true;
+      audio.outputAudioMixerGroup = masterControl.instance.spat;
+    } else {
+      audio.spatialize = false;
+      audio.outputAudioMixerGroup = masterControl.instance.nospat;
+    }
   }
 
   public void updateSecondary(bool on) {
@@ -65,16 +71,29 @@ public class embeddedSpeaker : MonoBehaviour {
 
   float smoothedPeaks = 0;
   signalGenerator curSignal, prevSignal;
-  void Update() {
-    if (speakerOut.near == null) {
+  void Update()
+  {
+    if (speakerOut.near == null)
+    {
       curSignal = signal;
-    } else {
+    }
+    else
+    {
       curSignal = null;
     }
 
-    if (prevSignal != curSignal) {
+    if (prevSignal != curSignal)
+    {
       output.incoming = prevSignal = curSignal;
       updateSpeaker();
     }
+
+    // hack for trying to fix no spatialisation bug with google resonance, this should be cleared!
+    if (Time.frameCount % 72 == 0)
+    {
+      audio.outputAudioMixerGroup = (masterControl.BinauralSetting == masterControl.BinauralMode.All) ? masterControl.instance.nospat : masterControl.instance.spat;
+      audio.outputAudioMixerGroup = (masterControl.BinauralSetting == masterControl.BinauralMode.All) ? masterControl.instance.spat : masterControl.instance.nospat;
+    }
   }
+
 }
