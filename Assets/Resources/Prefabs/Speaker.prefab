@@ -383,8 +383,8 @@ MonoBehaviour:
   listenerDirectivityAlpha: 0
   listenerDirectivitySharpness: 1
   gainDb: 0
-  nearFieldEffectEnabled: 0
-  nearFieldEffectGain: 9
+  nearFieldEffectEnabled: 1
+  nearFieldEffectGain: 4.01
   occlusionEnabled: 0
   occlusionIntensity: 10
   quality: 2
