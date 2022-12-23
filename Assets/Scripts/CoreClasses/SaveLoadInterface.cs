@@ -66,7 +66,7 @@ public class SaveLoadInterface : MonoBehaviour {
     if (v == 0) {
       xmlUpdate _xmlUpdate = new xmlUpdate();
       List<InstrumentData> dataB = _xmlUpdate.UpdateFile(filename);
-      foreach (InstrumentData dB in dataB) {
+      foreach (InstrumentData dB in dataB) {        
         GameObject g = Instantiate(instrumentPrefabs[dB.deviceType], Vector3.zero, Quaternion.identity) as GameObject;
         g.GetComponent<deviceInterface>().Load(dB);
       }
@@ -74,6 +74,7 @@ public class SaveLoadInterface : MonoBehaviour {
     Transform patchAnchor = GameObject.Find("PatchAnchor").transform;
     int c = synthSet.InstrumentList.Count;
     for (int i = 0; i < c; i++) {
+      if (synthSet.InstrumentList[c - 1 - i].deviceType == menuItem.deviceType.StereoVerb) synthSet.InstrumentList[c - 1 - i].deviceType = menuItem.deviceType.Freeverb; // legacy, remove in the future
       GameObject g = Instantiate(instrumentPrefabs[synthSet.InstrumentList[c - 1 - i].deviceType], patchAnchor /*Vector3.zero, Quaternion.identity*/) as GameObject;
       g.GetComponent<deviceInterface>().Load(synthSet.InstrumentList[c - 1 - i]);
     }
@@ -87,6 +88,7 @@ public class SaveLoadInterface : MonoBehaviour {
     float v = systemLoad(synthSet.SystemList[0], true);
 
     foreach (InstrumentData data in synthSet.InstrumentList) {
+      if (data.deviceType == menuItem.deviceType.StereoVerb) data.deviceType = menuItem.deviceType.Freeverb; // legacy, remove in the future
       Transform t = (Instantiate(menuManager.instance.refObjects[data.deviceType], par, false) as GameObject).transform;
       t.localPosition = data.position;
       t.localRotation = data.rotation;
@@ -214,6 +216,7 @@ public class SaveLoadInterface : MonoBehaviour {
 [XmlInclude(typeof(ArtefactData))]
 [XmlInclude(typeof(CompressorData))]
 [XmlInclude(typeof(FreeverbData))]
+[XmlInclude(typeof(StereoVerbData))]
 [XmlInclude(typeof(DelayData))]
 [XmlInclude(typeof(ScopeData))]
 [XmlInclude(typeof(QuantizerData))]

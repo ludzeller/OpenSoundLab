@@ -107,3 +107,12 @@ public class FreeverbData : InstrumentData {
     public int jackOutID, jackInID;
     public int cSizeID, cFreezeID, cMixID;
 }
+
+
+public class StereoVerbData : InstrumentData // for legacy import, remove at some point in the future
+{
+  public float size, damping, mix, width;
+  public bool freeze;
+  public int jackOutID, jackInID;
+  public int cSizeID, cFreezeID, cMixID;
+}

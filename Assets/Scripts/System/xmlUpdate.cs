@@ -62,8 +62,11 @@ public class xmlUpdate {
               break;
             case "Compressors":
               serializer = new XmlSerializer(typeof(CompressorData), new XmlRootAttribute { ElementName = xmlNode.Name });
-              break;
+              break;            
             case "Freeverbs":
+              serializer = new XmlSerializer(typeof(FreeverbData), new XmlRootAttribute { ElementName = xmlNode.Name });
+              break;
+            case "StereoVerbs": // legacy conversion
               serializer = new XmlSerializer(typeof(FreeverbData), new XmlRootAttribute { ElementName = xmlNode.Name });
               break;
             case "Delays":
@@ -164,7 +167,7 @@ public class xmlUpdate {
               break;
             case "Artefacts":
               serializer = new XmlSerializer(typeof(ArtefactData), new XmlRootAttribute { ElementName = xmlNode.Name });
-              break;
+              break;            
             default:
               serializer = new XmlSerializer(typeof(InstrumentData), new XmlRootAttribute { ElementName = xmlNode.Name });
               break;
@@ -187,6 +190,9 @@ public class xmlUpdate {
             case "Freeverbs":
               data[data.Count - 1].deviceType = menuItem.deviceType.Freeverb;
               break;
+            case "StereoVerbs":
+              data[data.Count - 1].deviceType = menuItem.deviceType.Freeverb;
+              break;
             case "Delays":
               data[data.Count - 1].deviceType = menuItem.deviceType.Delay;
               break;
@@ -196,7 +202,6 @@ public class xmlUpdate {
             case "Quantizers":
               data[data.Count - 1].deviceType = menuItem.deviceType.Quantizer;
               break;
-
             case "ADs":
               data[data.Count - 1].deviceType = menuItem.deviceType.AD;
               break;

@@ -64,6 +64,7 @@ public class menuItem : manipObject {
     Delay,
     Drum,
     Filter,
+    Freeverb,    
     Gain,
     Glide,
     Keyboard,
@@ -81,8 +82,7 @@ public class menuItem : manipObject {
     Polarizer,
     Quantizer,
     Recorder,
-    Reverb,
-    Freeverb, 
+    Reverb,    
     SampleHold,
     Sampler,
     Scope,
@@ -98,7 +98,8 @@ public class menuItem : manipObject {
     // this is a stopper, items below won't appear in menu; alternatively you can skip items in menuManager.loadMenu()
     Max,        
     TapeGroup,
-    Pano
+    Pano,
+    StereoVerb, // legacy, remove in the future
   };
 
   //Color disabledColor;
